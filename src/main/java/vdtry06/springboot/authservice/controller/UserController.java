@@ -3,7 +3,6 @@ package vdtry06.springboot.authservice.controller;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import vdtry06.springboot.authservice.dto.request.UserCreationRequest;
 import vdtry06.springboot.authservice.dto.request.UserUpdationRequest;
