@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import vdtry06.springboot.authservice.dto.request.UserCreationRequest;
 import vdtry06.springboot.authservice.dto.request.UserUpdationRequest;
 import vdtry06.springboot.authservice.entity.User;
+import vdtry06.springboot.authservice.exception.AppException;
+import vdtry06.springboot.authservice.exception.ErrorCode;
 import vdtry06.springboot.authservice.repository.UserRepository;
 
 import java.util.List;
@@ -21,6 +23,10 @@ public class UserService {
 
     public User createUser(UserCreationRequest request) {
         User user = new User();
+
+        if (userRepository.existsByUsername(request.getUsername()))
+            throw new AppException(ErrorCode.USER_EXISTED);
+
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setEmail(request.getEmail());
@@ -50,7 +56,7 @@ public class UserService {
 
     public User getUser(String id) {
         log.info("Getting user with id: " + id);
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
     }
 
     public void deleteUser(String id) {

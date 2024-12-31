@@ -1,11 +1,13 @@
 package vdtry06.springboot.authservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 import vdtry06.springboot.authservice.dto.request.UserCreationRequest;
 import vdtry06.springboot.authservice.dto.request.UserUpdationRequest;
+import vdtry06.springboot.authservice.dto.response.ApiResponse;
 import vdtry06.springboot.authservice.entity.User;
 import vdtry06.springboot.authservice.service.UserService;
 
@@ -19,8 +21,12 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody UserCreationRequest request) {
-        return userService.createUser(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+
+        apiResponse.setData(userService.createUser(request));
+
+        return apiResponse;
     }
 
     @PutMapping("/{userId}")
