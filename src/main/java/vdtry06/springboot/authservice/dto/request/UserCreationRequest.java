@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vdtry06.springboot.authservice.validator.BirthConstraint;
+import vdtry06.springboot.authservice.validator.EmailConstraint;
 
 import java.time.LocalDate;
 
@@ -22,8 +23,8 @@ public class UserCreationRequest {
     @Size(min = 8, message = "INVALID_PASSWORD")
     String password;
 
-    @Email(message = "EMAIL_INVALID", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.(com|org|net)$")
-    @NotEmpty(message = "Email cannot be empty")
+    @EmailConstraint(message = "EMAIL_INVALID")
+    @NotEmpty(message = "EMAIL_NOT_EMPTY")
     String email;
     String firstName;
     String lastName;

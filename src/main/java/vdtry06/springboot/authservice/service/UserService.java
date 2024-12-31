@@ -56,7 +56,7 @@ public class UserService {
 
     public User getUser(String id) {
         log.info("Getting user with id: " + id);
-        return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
 
     public void deleteUser(String id) {
