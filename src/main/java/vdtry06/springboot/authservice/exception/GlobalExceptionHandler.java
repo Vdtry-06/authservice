@@ -80,6 +80,7 @@ public class GlobalExceptionHandler {
 
         }
 
+        // nhập email lỗi hoặc để trống email
         if (errorCode == ErrorCode.EMAIL_INVALID || errorCode == ErrorCode.EMAIL_NOT_EMPTY) {
             ApiResponse apiResponse = new ApiResponse();
             apiResponse.setCode(errorCode.getCode());
@@ -92,8 +93,7 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.builder()
                         .code(errorCode.getCode())
                         .message(
-                                Objects.nonNull(attributes)
-                                        ? mapAttribute(errorCode.getMessage(), attributes)
+                                Objects.nonNull(attributes) ? mapAttribute(errorCode.getMessage(), attributes)
                                         : errorCode.getMessage())
                         .build());
     }
