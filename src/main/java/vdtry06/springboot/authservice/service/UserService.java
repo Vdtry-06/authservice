@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vdtry06.springboot.authservice.dto.request.UserCreationRequest;
 import vdtry06.springboot.authservice.dto.request.UserUpdationRequest;
@@ -28,9 +30,15 @@ public class UserService {
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername()))
-            throw new AppException(ErrorCode.USER_EXISTED);
+            throw new AppException(ErrorCode.USERNAME_EXISTED);
+        if (userRepository.existsByEmail(request.getEmail()))
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
+        if (userRepository.existsByPassword(request.getPassword()))
+            throw new AppException(ErrorCode.PASSWORD_EXISTED);
 
         User user = userMapper.toUser(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         log.info("User created: " + user);
         return userMapper.toUserResponse(userRepository.save(user));
