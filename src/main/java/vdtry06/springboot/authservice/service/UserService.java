@@ -47,6 +47,10 @@ public class UserService {
     public UserResponse updateUser(String userId, UserUpdationRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        if (userRepository.existsByEmail(request.getEmail()))
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
+        if (userRepository.existsByPassword(request.getPassword()))
+            throw new AppException(ErrorCode.PASSWORD_EXISTED);
 
         userMapper.updateUser(user, request);
 
