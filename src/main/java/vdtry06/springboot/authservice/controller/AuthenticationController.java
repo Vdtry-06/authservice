@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vdtry06.springboot.authservice.dto.request.AuthenticationRequest;
 import vdtry06.springboot.authservice.dto.request.IntrospectRequest;
+import vdtry06.springboot.authservice.dto.request.LogoutRequest;
+import vdtry06.springboot.authservice.dto.request.RefreshRequest;
 import vdtry06.springboot.authservice.dto.response.ApiResponse;
 import vdtry06.springboot.authservice.dto.response.AuthenticationResponse;
 import vdtry06.springboot.authservice.dto.response.IntrospectResponse;
@@ -35,10 +37,28 @@ public class AuthenticationController {
 
     // verify token
     @PostMapping("/introspect")
-    ApiResponse<IntrospectResponse> introspect(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
+    ApiResponse<IntrospectResponse> authenticate(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
         var result = authenticationService.introspect(request);
         return ApiResponse.<IntrospectResponse>builder()
                 .data(result)
                 .build();
     }
+
+    // logout token
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder().build();
+    }
+
+    // refresh token
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request)
+            throws ParseException, JOSEException {
+        var result = authenticationService.refreshToken(request);
+        return ApiResponse.<AuthenticationResponse>builder()
+                .data(result)
+                .build();
+    }
+
 }

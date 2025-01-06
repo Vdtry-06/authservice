@@ -8,6 +8,7 @@ import vdtry06.springboot.authservice.validator.BirthConstraint;
 import vdtry06.springboot.authservice.validator.EmailConstraint;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +27,6 @@ public class UserUpdationRequest {
 
     @BirthConstraint(min = 16, message = "INVALID_BIRTHDAY")
     LocalDate dateOfBirth;
+
+    List<String> roles;
 }
