@@ -1,18 +1,19 @@
 package vdtry06.springboot.authservice.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import vdtry06.springboot.authservice.dto.request.RoleRequest;
 import vdtry06.springboot.authservice.dto.response.RoleResponse;
 import vdtry06.springboot.authservice.mapper.RoleMapper;
 import vdtry06.springboot.authservice.repository.PermissionRepository;
 import vdtry06.springboot.authservice.repository.RoleRepository;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -1,9 +1,9 @@
 package vdtry06.springboot.authservice.dto.response;
 
+import java.util.Set;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @Builder

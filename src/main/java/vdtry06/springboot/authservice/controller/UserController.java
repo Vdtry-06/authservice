@@ -1,19 +1,20 @@
 package vdtry06.springboot.authservice.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 import vdtry06.springboot.authservice.dto.request.UserCreationRequest;
 import vdtry06.springboot.authservice.dto.request.UserUpdationRequest;
 import vdtry06.springboot.authservice.dto.response.ApiResponse;
 import vdtry06.springboot.authservice.dto.response.UserResponse;
 import vdtry06.springboot.authservice.service.UserService;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/users")
@@ -24,7 +25,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request){
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         log.info("Create user Controller");
         return ApiResponse.<UserResponse>builder()
                 .data(userService.createUser(request))
@@ -62,8 +63,6 @@ public class UserController {
 
     @GetMapping("/myInfo")
     ApiResponse<UserResponse> getMyInfo() {
-        return ApiResponse.<UserResponse>builder()
-                .data(userService.getMyInfo())
-                .build();
+        return ApiResponse.<UserResponse>builder().data(userService.getMyInfo()).build();
     }
 }

@@ -1,20 +1,29 @@
 package vdtry06.springboot.authservice.service;
 
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.SignedJWT;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.StringJoiner;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import vdtry06.springboot.authservice.dto.request.AuthenticationRequest;
 import vdtry06.springboot.authservice.dto.request.IntrospectRequest;
 import vdtry06.springboot.authservice.dto.request.LogoutRequest;
@@ -27,13 +36,6 @@ import vdtry06.springboot.authservice.exception.AppException;
 import vdtry06.springboot.authservice.exception.ErrorCode;
 import vdtry06.springboot.authservice.repository.InvalidatedTokenRepository;
 import vdtry06.springboot.authservice.repository.UserRepository;
-
-import java.text.ParseException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.StringJoiner;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -67,9 +69,7 @@ public class AuthenticationService {
         } catch (AppException e) {
             isValid = false;
         }
-        return IntrospectResponse.builder()
-                .valid(isValid)
-                .build();
+        return IntrospectResponse.builder().valid(isValid).build();
     }
 
     // đăng xuất token
@@ -115,11 +115,11 @@ public class AuthenticationService {
 
         Date expiryTime = (isRefresh)
                 ? new Date(signedJWT
-                .getJWTClaimsSet()
-                .getIssueTime()
-                .toInstant()
-                .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
-                .toEpochMilli())
+                        .getJWTClaimsSet()
+                        .getIssueTime()
+                        .toInstant()
+                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                        .toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified = signedJWT.verify(verifier); // true | false: neu token khong bi thay doi true
@@ -136,7 +136,8 @@ public class AuthenticationService {
         log.info("SignKey: {}", SIGNER_KEY);
 
         // tìm người dùng trong csdl
-        var user = userRepository.findByUsername(request.getUsername())
+        var user = userRepository
+                .findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         // so sánh mật khẩu: mk có độ mạnh càng lớn càng tốn bộ nhớ
@@ -146,10 +147,7 @@ public class AuthenticationService {
         if (!authenticated) throw new AppException(ErrorCode.UNAUTHENTICATED);
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder()
-                .token(token)
-                .authenticated(true)
-                .build();
+        return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
 
     // tạo token có thời hạn

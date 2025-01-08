@@ -1,8 +1,8 @@
 package vdtry06.springboot.authservice.configuration;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,15 +19,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/users", "/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh",
+        "/users", "/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh",
     };
 
     private final CustomJwtDecoder customJwtDecoder;

@@ -1,18 +1,19 @@
 package vdtry06.springboot.authservice.exception;
 
+import java.util.Map;
+import java.util.Objects;
+
 import jakarta.validation.ConstraintViolation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.View;
+
+import lombok.extern.slf4j.Slf4j;
 import vdtry06.springboot.authservice.dto.response.ApiResponse;
-
-
-import java.util.Map;
-import java.util.Objects;
 
 @ControllerAdvice
 @Slf4j
@@ -28,7 +29,7 @@ public class GlobalExceptionHandler {
     // lỗi ngoại lệ không tìm thấy
     @ExceptionHandler(Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
-//        log.error("Exception: ", exception);
+        //        log.error("Exception: ", exception);
         ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
         return ResponseEntity.badRequest()
                 .body(ApiResponse.builder()
@@ -94,7 +95,8 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.builder()
                         .code(errorCode.getCode())
                         .message(
-                                Objects.nonNull(attributes) ? mapAttribute(errorCode.getMessage(), attributes)
+                                Objects.nonNull(attributes)
+                                        ? mapAttribute(errorCode.getMessage(), attributes)
                                         : errorCode.getMessage())
                         .build());
     }

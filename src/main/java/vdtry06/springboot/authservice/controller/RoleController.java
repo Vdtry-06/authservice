@@ -1,17 +1,17 @@
 package vdtry06.springboot.authservice.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 import vdtry06.springboot.authservice.dto.request.RoleRequest;
 import vdtry06.springboot.authservice.dto.response.ApiResponse;
 import vdtry06.springboot.authservice.dto.response.RoleResponse;
 import vdtry06.springboot.authservice.service.RoleService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/roles")

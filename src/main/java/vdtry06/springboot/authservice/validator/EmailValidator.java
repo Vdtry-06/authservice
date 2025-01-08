@@ -1,9 +1,9 @@
 package vdtry06.springboot.authservice.validator;
 
+import java.util.regex.Pattern;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
-import java.util.regex.Pattern;
 
 // Validator để kiểm tra tính hợp lệ của email
 public class EmailValidator implements ConstraintValidator<EmailConstraint, String> {
@@ -11,8 +11,7 @@ public class EmailValidator implements ConstraintValidator<EmailConstraint, Stri
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.(com|org|net)$";
 
     @Override
-    public void initialize(EmailConstraint constraintAnnotation) {
-    }
+    public void initialize(EmailConstraint constraintAnnotation) {}
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {

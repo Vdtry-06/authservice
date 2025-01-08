@@ -1,22 +1,27 @@
 package vdtry06.springboot.authservice.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import vdtry06.springboot.authservice.dto.response.ApiResponse;
 import vdtry06.springboot.authservice.exception.ErrorCode;
-
-import java.io.IOException;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     // xử lý trường hợp người dùng không xác thực được
     @Override
     // khi có lỗi xác thực xảy ra nó sẽ được gọi
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(
+            HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+            throws IOException, ServletException {
 
         // xác định lỗi và mã phản hồi
         ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
