@@ -22,15 +22,15 @@ This microservice is responsible for:
 
 ## Docker guideline
 ### Build docker image
-`docker build -t <account>/auth-service:0.1.1 .`
+`docker build -t <account>/auth-service:0.1.2 .`
 ### Push docker image to Docker Hub
-`docker image push <account>/auth-service:0.1.1`
+`docker image push <account>/auth-service:0.1.2`
 ### Create network:
 `docker network create vdtry06-network`
 ### Start MySQL in vdtry06-network
-`docker run --network vdtry06-network --name mysql-2 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:9.0.1-oraclelinux9`
+`docker run --network vdtry06-network --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:9.0.1-oraclelinux9`
 ### Run your application in vdtry06-network
-`docker run --name auth-service --network vdtry06-network -p 8080:8080 -e DBMS_CONNECTION=jdbc:mysql://mysql-2:3306/auth_service auth-service:0.1.1`
+`docker run --name auth-service --network vdtry06-network -p 8080:8080 -e DBMS_CONNECTION=jdbc:mysql://mysql:3306/auth_service auth-service:0.1.2`
 
 ## Install Docker on ubuntu
 

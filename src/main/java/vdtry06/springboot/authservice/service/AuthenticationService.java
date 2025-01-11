@@ -105,7 +105,7 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder().token(token).authenticated(true).build();
+        return AuthenticationResponse.builder().token(token).build();
     }
 
     private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
@@ -123,7 +123,7 @@ public class AuthenticationService {
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified = signedJWT.verify(verifier); // true | false: neu token khong bi thay doi true
-        if (!(verified && expiryTime.after(new Date()))) throw new AppException(ErrorCode.UNAUTHORIZED);
+        if (!(verified && expiryTime.after(new Date()))) throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
             throw new AppException(ErrorCode.UNAUTHORIZED);
@@ -147,7 +147,7 @@ public class AuthenticationService {
         if (!authenticated) throw new AppException(ErrorCode.UNAUTHENTICATED);
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder().token(token).authenticated(true).build();
+        return AuthenticationResponse.builder().token(token).build();
     }
 
     // tạo token có thời hạn
