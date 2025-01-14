@@ -6,23 +6,15 @@ server:
 spring:
   datasource:
     driverClassName: "com.mysql.cj.jdbc.Driver"
-    url: ${DBMS_CONNECTION:jdbc:mysql://172.17.0.2:3306/auth_service}
-    username: ${DBMS_PASSWORD:root}
-    password: ${DBMS_USERNAME:root}
+    url: ${DBMS_CONNECTION}
+    username: ${DBMS_PASSWORD}
+    password: ${DBMS_USERNAME}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
 jwt:
-  signerKey: "${JWT_SINGNER_KEY:9lPU1eh/dAevOrB+SDNA7mldA781KJ2a/pwZLJs8Ty59/MHpaMgI7sH41mDSaDcu}"
-  valid-duration: ${JWT_VALID_DURATION:3600} # in seconds
-  refreshable-duration: ${JWT_REFRESH_DURATION:36000} # in seconds
-
-
-#  DBMS_CONNECTION=jdbc:mysql://localhost:3306/auth_service;
-#  DBMS_PASSWORD=root;
-#  DBMS_USERNAME=root;
-#  JWT_REFRESH_DURATION=36000;
-#  JWT_SINGNER_KEY=9lPU1eh/dAevOrB+SDNA7mldA781KJ2a/pwZLJs8Ty59/MHpaMgI7sH41mDSaDcu;
-#  JWT_VALID_DURATION=3600
+  signerKey: "${JWT_SINGNER_KEY}"
+  valid-duration: ${JWT_VALID_DURATION} # in seconds
+  refreshable-duration: ${JWT_REFRESH_DURATION} # in seconds
