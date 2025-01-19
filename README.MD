@@ -1,5 +1,5 @@
 # Auth service
-This mvc is responsible for:
+This Layered Architecture is responsible for:
 * Onboarding users
 * Roles and permissions
 * Authentication
